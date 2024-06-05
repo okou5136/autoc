@@ -36,8 +36,8 @@ int main(int argc, char * argv[]) {
     char title_class[] = "title";
     char toc_class[] = "table-of-contents";
 
-    int parsed_lindex = 0;
-    int parsed_cindex = 0;
+    //int parsed_lindex = 0;
+    //int parsed_cindex = 0;
 
     int info_counter = 0;
     int attr_counter = 0;
@@ -79,34 +79,51 @@ int main(int argc, char * argv[]) {
     //printf("\n");
     
     // "i" represents the number of the line read from the file 
-    while(k < i) {
-        for(j = 0; j < sizeof(html_data[i]); j++) {
-            if(html_data[k][j] == '\n') {
-                j++;
-                continue;
-            }
-            parsed[parsed_lindex][parsed_cindex] = html_data[k][j];
+    //while(k < i) {
+    //    for(j = 0; j < sizeof(html_data[i]); j++) {
+    //        if(html_data[k][j] == '\n') {
+    //            j++;
+    //            continue;
+    //        }
+    //        parsed[parsed_lindex][parsed_cindex] = html_data[k][j];
 
-            parsed_cindex++;
+    //        parsed_cindex++;
 
-            if(html_data[k][j] == '<' ||
-                    html_data[k][j] == '>' ||
-                    html_data[k][j] == '=' ||
-                    html_data[k][j] == ' ' ||
-                    html_data[k][j] == '&' ||
-                    html_data[k][j] == '!' ||
-                    html_data[k][j] == '\"' ||
-                    html_data[k][j + 1] == '\"' ||
-                    html_data[k][j + 1] == '=' ||
-                    html_data[k][j + 1] == '!' ||
-                    html_data[k][j + 1] == '>' ||
-                    html_data[k][j + 1] == '&' ||
-                    html_data[k][j + 1] == '<' ) {
-                parsed_lindex++;
-                parsed_cindex = 0;
+    //        if(html_data[k][j] == '<' ||
+    //                html_data[k][j] == '>' ||
+    //                html_data[k][j] == '=' ||
+    //                html_data[k][j] == ' ' ||
+    //                html_data[k][j] == '&' ||
+    //                html_data[k][j] == '!' ||
+    //                html_data[k][j] == '\"' ||
+    //                html_data[k][j + 1] == '\"' ||
+    //                html_data[k][j + 1] == '=' ||
+    //                html_data[k][j + 1] == '!' ||
+    //                html_data[k][j + 1] == '>' ||
+    //                html_data[k][j + 1] == '&' ||
+    //                html_data[k][j + 1] == '<' ) {
+    //            parsed_lindex++;
+    //            parsed_cindex = 0;
+    //        }
+    //    }
+    //    k++;
+    //}
+
+    // procedual parsing
+
+    for(i = 0; i < sizeof(html_data); i++) {
+        for(j = 0; i < sizeof(html_data[i]); j++) {
+            switch(html_data[i][j]) {
+                case '<':
+                    intags = true;
+                    break;
+                case '=':
+                    for(int tagcount = j; html_data[i] != ' '; tagcount--) {
+
+                    }
             }
+
         }
-        k++;
     }
 
 

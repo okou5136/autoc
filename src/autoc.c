@@ -20,7 +20,6 @@ struct Information {
 void print_help(int depth);
 
 int main(int argc, char * argv[]) {
-
     if(argc < 2) {
         puts("Error: not enough arguments");
         print_help(0);
@@ -68,9 +67,8 @@ int main(int argc, char * argv[]) {
     }
 
     //fread(html_data, sizeof(html_data), 1, fp);
-    for(i = 0; fgets(html_data[i], sizeof(html_data[i]), fp) == NULL; i++) {
-        printf("%c", html_data[i]);
-
+    for(i = 0; fgets(html_data[i], sizeof(html_data[i]), fp) != NULL; i++) {
+        printf("%s", html_data[i]);
     }
     printf("\n");
 
@@ -79,38 +77,36 @@ int main(int argc, char * argv[]) {
     //    printf("%c", html_data[i]);
     //}
     //printf("\n");
+    
+    // "i" represents the number of the line read from the file 
+    while(k < i) {
+        for(j = 0; j < sizeof(html_data[i]); j++) {
+            if(html_data[k][j] == '\n') {
+                j++;
+                continue;
+            }
+            parsed[parsed_lindex][parsed_cindex] = html_data[k][j];
 
+            parsed_cindex++;
 
-    i = 0;
-    while(i < sizeof(html_data)) {
-        if(html_data[i] == '\n') {
-            i++;
-            continue;
+            if(html_data[k][j] == '<' ||
+                    html_data[k][j] == '>' ||
+                    html_data[k][j] == '=' ||
+                    html_data[k][j] == ' ' ||
+                    html_data[k][j] == '&' ||
+                    html_data[k][j] == '!' ||
+                    html_data[k][j] == '\"' ||
+                    html_data[k][j + 1] == '\"' ||
+                    html_data[k][j + 1] == '=' ||
+                    html_data[k][j + 1] == '!' ||
+                    html_data[k][j + 1] == '>' ||
+                    html_data[k][j + 1] == '&' ||
+                    html_data[k][j + 1] == '<' ) {
+                parsed_lindex++;
+                parsed_cindex = 0;
+            }
         }
-
-        parsed[parsed_lindex][parsed_cindex] = html_data[i];
-
-
-        parsed_cindex++;
-
-        if(html_data[i] == '<' ||
-           html_data[i] == '>' ||
-           html_data[i] == '=' ||
-           html_data[i] == ' ' ||
-           html_data[i] == '&' ||
-           html_data[i] == '!' ||
-           html_data[i] == '\"' ||
-           html_data[i + 1] == '\"' ||
-           html_data[i + 1] == '=' ||
-           html_data[i + 1] == '!' ||
-           html_data[i + 1] == '>' ||
-           html_data[i + 1] == '&' ||
-           html_data[i + 1] == '<' ) {
-            parsed_lindex++;
-            parsed_cindex = 0;
-        }
-
-        i++;
+        k++;
     }
 
 
